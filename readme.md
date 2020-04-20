@@ -62,5 +62,4 @@ git clone https://github.com/guoming/sersync-rsync.git
 ### 2.2 启动sersync
 ``` Shell
 ./bin/sersync -o ./conf/confxml.xml
-```"# sersync-rsync" 
-"# sersync-rsync" 
+```
