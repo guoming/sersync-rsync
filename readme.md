@@ -41,14 +41,24 @@ echo rsync_backup:123456>/etc/rsyncd.password
 
 > rsync 客户端需要的密码文件（密码：123456）
 ```  Shell
-echo 123456>/etc/client-password
+echo 123456>/etc/rsyncd.client-password
 ```
 
 > 设置密码文件权限
 ``` Shell
-chmod 600 rsyncd.password 
-chmod 600 rsyncd.client-password
-chown rsync /mnt/rfs
+chmod 600 /etc/rsyncd.password 
+chmod 600 /etc/rsyncd.client-password
+chown rsync /etc/rsyncd.client-password ## 请确保和执行rsync的用户保持一致
+```
+> 创建需要同步的目录
+``` Shell
+mkdir /mnt/rfs
+chown -R rsync.rsync /mnt/rfs
+```
+
+> 测试同步
+ ``` Shell
+rsync -artuz -R /mnt/rfs/ rsync_backup@192.168.109.183::rfs --password-file=/etc/rsyncd.client-password --port=873
 ```
 
 ## 1.3 启动 rsync
@@ -63,3 +73,4 @@ git clone https://github.com/guoming/sersync-rsync.git
 ``` Shell
 ./bin/sersync -o ./conf/confxml.xml
 ```
+
